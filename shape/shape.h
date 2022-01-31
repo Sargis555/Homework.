@@ -19,7 +19,8 @@ public:
 	int get_x();
 	int get_y();
 	void set_x(int x1);
-	void set_y(int y1);	
+	void set_y(int y1);
+	point moveTo(int x1, int y1);	
 };
 
 class shape
@@ -28,8 +29,8 @@ class shape
 public:
 	virtual void set_width(point& a, point& b);
 	virtual void set_height(point& c, point& d);
-	virtual void set_radius(point& a, point& b);
-	virtual void area();
+	//virtual void set_radius(point& a, point& b);
+	virtual int area();
 };
 
 class rectangle: public shape
@@ -40,7 +41,7 @@ private:
 
 public:
 	rectangle();
-	rectangle( int width1, int height1);
+	rectangle(int width1, int height1);
 	~rectangle();
 
 public:
@@ -48,7 +49,7 @@ public:
 	int get_height();
 	void set_width(point& a, point& b);
 	void set_height(point& c, point& d);
-	void area();
+	int area();
 	const rectangle& operator=(const rectangle& c);
 	bool operator==(const rectangle& a) const;	
 };
@@ -66,7 +67,7 @@ public:
 public:
 	int get_radius();
 	void set_radius(point& a, point& b);
-	void area();
+	int area();
 	const circle& operator=(const circle& c);
 	bool operator==(const circle& a) const;
 	
@@ -77,19 +78,19 @@ class triangle: public shape
 private:
 	int width;
     int height;
+	int area1;
 
 public:
 	triangle();
 	triangle(int width1, int height1);
-	 ~triangle();
+	~triangle();
 
 public:
 	int get_width();
 	int get_height();
 	void set_width(point& a, point& b);
 	void set_height(point& c, point& d);
-	double rezult=0;
-	void area();
+	int area();
 	const triangle& operator=(const triangle& c);
 	bool operator==(const triangle& a) const;
 	

@@ -22,14 +22,16 @@ int main()
     ss = &rec;
     ss->set_height(a, b);
     ss->set_width(c, d);
-    ss->area();
-    ss= &cir;
-    ss->set_radius(a, b);
-    ss->area();
+    std::cout<<ss->area()<<'\n';
+   // ss= &cir;
+    //ss->set_radius(a, b);
+    //ss->area();
     ss = &tri;
     ss->set_height(a, b);
     ss->set_width(c, d);
-    ss->area();
+    std::cout<<ss->area()<<'\n';
+	cir.set_radius(a, b);
+	std::cout<<cir.area()<<'\n';
     rec == rec1;
 
 return 0;
