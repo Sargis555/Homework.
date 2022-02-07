@@ -298,10 +298,88 @@ template <typename T>
 void list<T>::swap(list<T>& a)
 {
 	node<T>* tmp = this->m_head;
+	node<T>* tmp1 = this->m_tail;
 	this->m_head = a.m_head;
+	this->m_tail = a.m_tail;
 	a.m_head = tmp;
+	a.m_tail = tmp1;
 	
 }
+
+template <typename T>
+void list<T>::bubblesort()
+{
+	node<T>* current = m_head;
+	node<T>* tmp = new node<T>(0,nullptr,nullptr);
+    while (current->m_next != nullptr) {
+	
+			if ((current->m_value) > (current->m_next->m_value)){
+				tmp->m_value = current->m_value;
+				current->m_value = current->m_next->m_value;
+				current->m_next->m_value = tmp->m_value;
+			}
+		current = current->m_next;
+		}
+
+}
+
+
+
+
+template <typename T>
+node<T> list<T>::midPoint(list<T>& a)
+{
+	node<T>* slow = a.m_head;
+	node<T>* fast = a.m_head->m_next;
+	
+	while((fast != nullptr) && (fast->m_next != nullptr)){
+		slow = slow->m_next;
+		fast = fast->m_next->m_next;
+	}
+	return slow;
+}
+
+template <typename T>
+node<T> list<T>::merge(node<T>& m_head1, node<T>& m_head2)
+{
+	if(m_head1 == nullptr){
+		return m_head2;
+	}
+	if(m_head2 == nullptr){
+		return m_head1;
+	}
+
+	node<T>* result = new node<T>(0,nullptr,nullptr);
+	if(m_head1->m_value < m_head2->m_value){
+		result = m_head1;
+		result->m_next = merge(m_head1->m_next, m_head2);
+	}
+	else{
+		result = m_head2;
+		result->m_next = merge(m_head1, m_head2->m_next);
+	}
+	return result;
+	
+}
+
+
+template <typename T>
+node<T> list<T>::mergesort(list<T>& a)
+{
+	if(a.m_head == nullptr || a.m_head->m_next == nullptr){
+		return a.m_head;
+	}
+	node<T>* mid = midPoint(a);
+
+	node<T>* c = a.m_head;
+	node<T>* b = mid->m_next;
+	mid->m_next = nullptr;
+
+	return merge(c, b);
+}
+
+
+
 
 template <typename T>
 list<T>::~list()

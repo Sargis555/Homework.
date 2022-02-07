@@ -214,6 +214,25 @@ void test_remove()
 	assert(f.size() == 24);
 }
 
+void test_bubblesort()
+{
+    list<int> a;
+    assert(a.size() == 0);
+    assert(a.empty()); 
+    a.insert(a.size(), 5);
+    a.insert(a.size(), 16);
+    a.insert(a.size(), 7);
+    a.insert(a.size(), 80);
+    a.insert(a.size(), 9);
+    assert(a.size() == 5);
+    std::cout << a << std::endl;
+    a.bubblesort();
+    std::cout << a << std::endl;
+    a.bubblesort();
+    std::cout << a << std::endl;
+}
+
+
 int main()
 {
     test_default_constructor();
@@ -229,7 +248,8 @@ int main()
     test_complex_data_type();
     test_pointer();
 	test_assignment();
-	//test_swap();
+	test_swap();
 	test_remove();
+	test_bubblesort();
 	return 0;
 }
