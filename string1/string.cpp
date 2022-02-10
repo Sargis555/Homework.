@@ -1,4 +1,5 @@
 #include "string.h"
+#include <cassert>
 
 new_string::new_string()
 {
@@ -9,6 +10,7 @@ new_string::new_string()
 new_string::new_string(char *str)
 {
     length = strlen(str);
+	assert(length >=0);
     this->str = new char[length+1];
     for (int i = 0; i < length; ++i)
     {
@@ -23,6 +25,7 @@ new_string::new_string(const new_string& str1)
     {
         delete[] str;
     }
+	assert(this->str == nullptr);
     length = strlen(str1.str);
     this->str = new char[length +1];
     for (int i = 0; i < length; ++i)
@@ -30,6 +33,7 @@ new_string::new_string(const new_string& str1)
         this->str[i] = str1.str[i];
     }
     this->str[length] = '\0';
+	assert(strlen(this->str) == strlen(str1.str));
 }
 
 new_string::~new_string()
@@ -39,16 +43,6 @@ new_string::~new_string()
 
 int new_string::get_length()
 {
-    return length;
-}
-
-int new_string::get_size(new_string& str)
-{
-    length = 0;
-    while (str[length] != '\0')
-    {
-        length++;
-    }
     return length;
 }
 
@@ -74,29 +68,15 @@ char new_string::operator+=(char value)
 
 bool new_string::operator<(const new_string& str1)
 {
-    if (this->length < str1.length){
-        return true;
-    }
-    if (this->length > str1.length){
-        return false;
-    }
-    int x = 0;
-    int y = 0;
-    if (this->length == str1.length){
-        for (int i = 0; i < this->length; ++i){
-            if (this->str[i] < str1.str[i]){
-                x = x + 1;
-            }
-            else
-                y = y + 1;
+	for (int i = 0; i < this->length; ++i)
+	{
+    	if (this->str[i] < str1.str[i]){
+        	return true;
         }
-        if (x > y){
-            return true;
-        }
-        else 
-            return false;
     }
+      	return false;
 }
+
 
 char& new_string::operator[](int index)
 {
@@ -105,10 +85,14 @@ char& new_string::operator[](int index)
 
 const new_string& new_string::operator=(const new_string& str1)
 {
-    if (this->str != nullptr)
-    {
-        delete[] str;
+	if (this == &str1){
+        return *this;
     }
+    if(this->str != nullptr){
+        delete[] str;
+		str = nullptr;
+    }
+	assert(str == nullptr);
     length = strlen(str1.str);
     this->str = new char[length+1];
     for (int i = 0; i < length; ++i)
@@ -116,6 +100,7 @@ const new_string& new_string::operator=(const new_string& str1)
         this->str[i] = str1.str[i];
     }
     this->str[length] = '\0';
+	assert(strlen(this->str) == strlen(str1.str));
     return *this;
 }
 
@@ -136,6 +121,7 @@ new_string new_string::operator+(const new_string& str1)
         new_str.str[i] = str1.str[j];
     }
     new_str.str[length1 + length2] = '\0';
+	assert(strlen(new_str.str) == strlen(this->str) + strlen(str1.str));
     return new_str;
 }
 
@@ -145,17 +131,6 @@ void new_string::swap(new_string& str1)
     tmp = *this;
     *this =  str1;
     str1 = tmp;
-}
-
-bool new_string::find_first_of(const new_string& str1)
-{
-	for (int i = 0; i < this->length; ++i)
-    {
-        if (this->str[i] == str1.str[0]){
-            return true;
-        }
-    }
-    return false;
 }
 
 void new_string::Print()
