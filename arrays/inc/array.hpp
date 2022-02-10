@@ -12,16 +12,15 @@ public:
     typedef unsigned int size_type;
 
 public:
-    size_type size();
-    bool empty();
-    element_type access(size_type index);
-    void insert(size_type index, element_type value);
-    ///////////
-    void remove(size_type index, element_type value);
-    ///////////
-    ///////////
-    void modify(size_type index, element_type value);
-    ///////////
+    size_type size() const;
+    bool empty() const;
+    element_type& operator[](size_type index);
+    void insert(size_type index, const element_type value);
+    void remove(size_type index);
+	bool operator==(const array& a) const;
+    bool operator!=(const array& a) const;
+	
+	friend std::ostream& operator<<(std::ostream& out, const array& a);
 
 private:
 	element_type* m_start;
@@ -29,7 +28,9 @@ private:
 
 public:
     array();
-    array(size_type n, element_type default_value);
+    array(size_type n, const element_type default_value);
+	array(const array& b);
+	const array& operator=(const array& c);
     ~array();
 
 };
