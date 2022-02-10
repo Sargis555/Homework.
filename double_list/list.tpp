@@ -280,13 +280,14 @@ void list<T>::remove(const size_type& index)
     assert(index <= size());
     if (index == 0) {
         pop_front();
-    } else if (index == size()) {
+    } 
+	else if (index == size()) {
         pop_back();
-    } else {
+    } 
+	else {
         assert(index >= 1);
         node<T>* current = access_helper(index);
         assert(current != nullptr);
-
 		current->m_next->m_prev = current->m_prev;
 		current->m_prev->m_next = current->m_next;
 		delete current; 
@@ -309,77 +310,28 @@ void list<T>::swap(list<T>& a)
 template <typename T>
 void list<T>::bubblesort()
 {
-	node<T>* current = m_head;
+	size_type swapped;
+	node<T>* current = nullptr;
+	node<T>* current1 = nullptr;
 	node<T>* tmp = new node<T>(0,nullptr,nullptr);
-    while (current->m_next != nullptr) {
-	
+	do
+	{	
+		swapped=0;
+		current = m_head;
+		while (current->m_next != current1) 
+		{
 			if ((current->m_value) > (current->m_next->m_value)){
 				tmp->m_value = current->m_value;
 				current->m_value = current->m_next->m_value;
 				current->m_next->m_value = tmp->m_value;
-			}
-		current = current->m_next;
+				swapped=1;
+			}	
+			current = current->m_next;		
 		}
-
+	current1 = current;
+	}
+	while (swapped);
 }
-
-
-
-
-template <typename T>
-node<T> list<T>::midPoint(list<T>& a)
-{
-	node<T>* slow = a.m_head;
-	node<T>* fast = a.m_head->m_next;
-	
-	while((fast != nullptr) && (fast->m_next != nullptr)){
-		slow = slow->m_next;
-		fast = fast->m_next->m_next;
-	}
-	return slow;
-}
-
-template <typename T>
-node<T> list<T>::merge(node<T>& m_head1, node<T>& m_head2)
-{
-	if(m_head1 == nullptr){
-		return m_head2;
-	}
-	if(m_head2 == nullptr){
-		return m_head1;
-	}
-
-	node<T>* result = new node<T>(0,nullptr,nullptr);
-	if(m_head1->m_value < m_head2->m_value){
-		result = m_head1;
-		result->m_next = merge(m_head1->m_next, m_head2);
-	}
-	else{
-		result = m_head2;
-		result->m_next = merge(m_head1, m_head2->m_next);
-	}
-	return result;
-	
-}
-
-
-template <typename T>
-node<T> list<T>::mergesort(list<T>& a)
-{
-	if(a.m_head == nullptr || a.m_head->m_next == nullptr){
-		return a.m_head;
-	}
-	node<T>* mid = midPoint(a);
-
-	node<T>* c = a.m_head;
-	node<T>* b = mid->m_next;
-	mid->m_next = nullptr;
-
-	return merge(c, b);
-}
-
-
-
 
 template <typename T>
 list<T>::~list()

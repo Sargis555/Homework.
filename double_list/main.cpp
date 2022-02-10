@@ -146,45 +146,6 @@ void test_at()
     }
 }
 
-struct data
-{
-    int x;
-    int y;
-    data(int a = 0, int b = 0) : x(a), y(b) {}
-};
-
-void test_complex_data_type()
-{
-    list<data> e;
-    assert(e.empty());
-    list<data> l(5, data(6, 7));
-    assert(l.size() == 5);
-    for (list<data>::size_type i = 0; i < l.size(); ++i) {
-        assert(l.at(i).x == 6);
-        assert(l.at(i).y == 7);
-    }
-}
-
-void test_pointer()
-{
-    using list_data_pointer = list<data*>;
-    list_data_pointer e;
-    assert(e.empty());
-    list_data_pointer l(5, nullptr);
-    assert(l.size() == 5);
-    for (list_data_pointer::size_type i = 0; i < l.size(); ++i) {
-        assert(l.at(i) == nullptr);
-        l.at(i) = new data(i, 2 * i);
-    }
-    for (list_data_pointer::size_type i = 0; i < l.size(); ++i) {
-        list_data_pointer::value_type& v = l.at(i);
-        assert(v != nullptr);
-        delete v;
-        v = nullptr;
-        assert(l.at(i) == nullptr);
-    }
-}
-
 void test_assignment()
 {
     list<int> b(56, 0);
@@ -224,11 +185,16 @@ void test_bubblesort()
     a.insert(a.size(), 7);
     a.insert(a.size(), 80);
     a.insert(a.size(), 9);
-    assert(a.size() == 5);
+	a.insert(a.size(), 5);
+    assert(a.size() == 6);
     std::cout << a << std::endl;
     a.bubblesort();
-    std::cout << a << std::endl;
-    a.bubblesort();
+	assert(a.at(0) == 5);
+    assert(a.at(1) == 5);
+    assert(a.at(2) == 7);
+    assert(a.at(3) == 9);
+    assert(a.at(4) == 16);
+	assert(a.at(5) == 80);
     std::cout << a << std::endl;
 }
 
@@ -245,8 +211,6 @@ int main()
     test_cout();
     test_at();
     test_copy_constructor();
-    test_complex_data_type();
-    test_pointer();
 	test_assignment();
 	test_swap();
 	test_remove();

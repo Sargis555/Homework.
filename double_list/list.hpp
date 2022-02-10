@@ -33,9 +33,6 @@ public:
 	void clear();
 	void swap(list& a);
 	void bubblesort();
-	node<T> midPoint(list &a);
-    node<T> merge(node<T> &m_head1, node<T> &m_head2);
-    node<T> mergesort(list &a);
     template <typename C>
     friend std::ostream& operator<<(std::ostream& out, const list<C>& l);
 
