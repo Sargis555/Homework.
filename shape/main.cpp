@@ -23,9 +23,6 @@ int main()
     ss->set_height(a, b);
     ss->set_width(c, d);
     std::cout<<ss->area()<<'\n';
-   // ss= &cir;
-    //ss->set_radius(a, b);
-    //ss->area();
     ss = &tri;
     ss->set_height(a, b);
     ss->set_width(c, d);

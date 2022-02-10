@@ -20,7 +20,7 @@ public:
 	int get_y();
 	void set_x(int x1);
 	void set_y(int y1);
-	point moveTo(int x1, int y1);	
+	void moveTo(int& x1, int& y1);	
 };
 
 class shape
@@ -29,8 +29,7 @@ class shape
 public:
 	virtual void set_width(point& a, point& b);
 	virtual void set_height(point& c, point& d);
-	//virtual void set_radius(point& a, point& b);
-	virtual int area();
+	virtual int area()=0;
 };
 
 class rectangle: public shape

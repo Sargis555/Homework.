@@ -37,7 +37,7 @@ void point::set_y(int y1)
     y = y1;
 }
 
-point point::moveTo(int x1, int y1)
+void point::moveTo(int& x1, int& y1)
 {
     x = x + x1;
     y = y + y1;
