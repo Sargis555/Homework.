@@ -20,6 +20,7 @@ public:
     void push_back(const value_type& value);
     void pop_front();
     void pop_back();
+	void clear();
     friend std::ostream& operator<<(std::ostream& out, const list& l);
 
 private:

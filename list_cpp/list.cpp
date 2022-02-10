@@ -52,47 +52,51 @@ void list::push_front(const value_type& value)
     node* new_node = new node(value, m_head);
     m_head = new_node;
 }
-/////
+
 void list::push_back(const value_type& value)
 {
-	if (m_head == nullptr){
-		//node* new_node = new node(value, nullptr);
-		//m_head = new_node;
-		m_head = new node(value, nullptr);
+	if (m_head == nullptr) {
+        m_head = new node(value, nullptr);
 	}
 	else
 	{
-	node* current = m_head;
-	while (current->m_next != nullptr) {
-		current = current->m_next;
+		assert(size() >= 1);
+		node* current = m_head;
+        while(current->m_next != nullptr)
+        {
+            current = current->m_next;
+        }
+        current->m_next = new node(value, nullptr);
 	}
-	//node* new_node = new node(value, nullptr);
-	//current->m_next = new_node;
-	current->m_next = new node(value, nullptr);
-	}
-	//node* new_node = new node(value, m_head);	
-    // TODO
 }
-///
+
 void list::pop_front()
 {
 	node *tmp = m_head;
 	m_head = m_head->m_next;
 	delete tmp;
-    // TODO
 }
-///
+
 void list::pop_back()
 {
-	node* tmp = m_head;
-    while (tmp->m_next != nullptr) {
-        tmp = tmp->m_next;
-    }
-	delete tmp;
-	
-	
-    // TODO
-}
+	assert(m_head != nullptr);
+    if (m_head->m_next == nullptr) {
+        pop_front();
+        assert(m_head == nullptr);
+	}
+	else
+	{
+		assert(size() >= 2);
+		node* current = m_head;
+		node* tmp = current->m_next;
+    	while (tmp->m_next != nullptr) {
+        	tmp = tmp->m_next;
+			current = current->m_next;
+    	}
+		current->m_next = nullptr;
+		delete tmp;
+	}
+}	
 
 list::list()
     : m_head(nullptr)
@@ -117,15 +121,21 @@ list::list(size_type n, const value_type& default_value)
 
 list::list(const list& b)
 {
-
-	node* tmp = b.m_head;
-	
-	while (tmp->m_next != nullptr)
+	node* tmp = nullptr;
+	node* current = b.m_head;
+	while (current != nullptr)
 	{
-		push_back(tmp->m_value);
-		tmp = tmp->m_next;
+		node* new_node = new node(current->m_value, nullptr);
+		if(m_head == nullptr){
+			m_head = new_node;
+		}
+		else
+		{
+			tmp->m_next = new_node;
+		}
+		tmp = new_node;
+		current = current->m_next;
 	}
-    // TODO
 }
 
 const list& list::operator=(const list& c)
@@ -134,29 +144,39 @@ const list& list::operator=(const list& c)
     if (this == &c) {
         return *this;
 	}
-	if ((m_head->m_value != 0)&&(m_head->m_next != nullptr)){
-	while (! empty()) {
-		pop_front();
-	}	
+	if(m_head != nullptr){
+		clear();
 	}
-	assert(m_head->m_next == nullptr);
-	node* tmp = c.m_head;
-
-    while (tmp->m_next != nullptr)
+	node* tmp = nullptr;
+    node* current = c.m_head;
+    while (current != nullptr)
     {
-        push_back(tmp->m_value);
-        tmp = tmp->m_next;
+        node* new_node = new node(current->m_value, nullptr);
+        if(m_head == nullptr){
+            m_head = new_node;
+        }
+        else
+        {
+            tmp->m_next = new_node;
+        }
+        tmp = new_node;
+        current = current->m_next;
     }
 
-    // TODO
     return *this;
+}
+
+void list::clear()
+{
+	while (! empty()) {
+		pop_front();
+	}
+    assert(m_head == nullptr);
 }
 
 list::~list()
 {
-//	while (! empty()) {
-//        pop_front();		
-//    }
-
-    // TODO
+	while (! empty()) {
+        pop_front();		
+    }
 }
